@@ -17,17 +17,7 @@ const Home = () => {
     }
   }, [data]);
 
-  return (
-    <>
-      <div className='col-lg-8 offset-lg-2'>
-        <h1>Hi!</h1>
-        <button onClick={handleAlert}>hello Ahuhu</button>
-      </div>
-      <div className='App'>
-        <Button type='primary'>Button</Button>
-      </div>
-    </>
-  );
+  return <div className=''></div>;
 };
 
 export { Home };
