@@ -11,6 +11,7 @@ const Login = () => {
 
   return (
     <Form
+      className='formLogin'
       name='basic'
       labelCol={{
         span: 8,
@@ -39,6 +40,7 @@ const Login = () => {
       </Form.Item>
 
       <Form.Item
+        className='password'
         label='Mật khẩu'
         name='password'
         rules={[

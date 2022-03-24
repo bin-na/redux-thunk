@@ -1,4 +1,11 @@
 @import '~antd/dist/antd.css';
-/* #app {
-  text-align: center;
-} */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;1,200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Playfair+Display:wght@600&display=swap');
+.page {
+  display: flex;
+  font-family: 'Poppins', sans-serif;
+}
+.container {
+  width: 100%;
+  min-height: 100vh;
+}
