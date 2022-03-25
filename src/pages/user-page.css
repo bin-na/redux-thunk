@@ -1,0 +1,66 @@
+.userWrapper {
+  width: 100%;
+  min-height: 100vh;
+}
+.colorSession {
+  width: 100%;
+  min-height: 70vh;
+  background-image: linear-gradient(to right, #223a88, #9eedf3);
+}
+.noColorSession {
+  width: 100%;
+  height: calc(100vh - 70vh);
+  background-color: #f3f3f3;
+}
+
+.userSession {
+  width: 70%;
+  min-height: 70%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  box-shadow: 3px 12px 10px 5px rgba(236, 236, 236, 0.5);
+  border-radius: 14px;
+  padding: 30px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.imgBox {
+  min-height: 100%;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+.userImg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.userImg .ant-avatar-icon {
+  width: 300px;
+  height: 300px;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.userImg .ant-avatar-icon .anticon-user {
+  font-size: 150px;
+}
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+.userInfo > * {
+  margin-bottom: 20px;
+}

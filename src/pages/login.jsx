@@ -9,6 +9,7 @@ export default function Login() {
   };
 
   return (
+
     <div className="my-container">
       <Col xs={12} sm={8}>
         <Form
@@ -61,7 +62,6 @@ export default function Login() {
               Forgot password
             </a>
           </Form.Item>
-
           <Form.Item>
             <Button
               type="primary"
