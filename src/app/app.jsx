@@ -1,6 +1,5 @@
-import React from 'react';
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
-
+import React from "react";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { history } from '../helpers';
 import { Home, Same } from '../Pages';
 import Login from '../pages/login';
@@ -22,8 +21,6 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
-    </div>
-  );
-}
+    </div
 
 export { App };

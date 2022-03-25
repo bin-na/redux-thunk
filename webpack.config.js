@@ -1,25 +1,25 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: [".js", ".jsx"],
   },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: "./src/index.html",
     }),
   ],
   devServer: {
@@ -28,7 +28,7 @@ module.exports = {
   externals: {
     // global app config object
     config: JSON.stringify({
-      apiUrl: 'http://localhost:4000',
+      apiUrl: "http://localhost:4000",
     }),
   },
 };
