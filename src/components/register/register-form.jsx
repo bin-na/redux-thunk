@@ -82,6 +82,15 @@ const RegisterForm = () => {
   const onFinish = (values) => {
     if (localStorage.getItem("infor") === null) {
       localStorage.setItem("infor", JSON.stringify([values]));
+      openMessageSuccess("Register successfully!");
+      navigate("/login");
+    } else if (localStorage.getItem("infor") !== null) {
+      const getArr = JSON.parse(localStorage.getItem("infor"));
+      getArr.forEach((user) => {
+        if (user.username === values.username) {
+          openMessage("This username already exists!");
+        }
+      });
     } else {
       const getArr = JSON.parse(localStorage.getItem("infor"));
       //console.log('Received values of form: ', values);

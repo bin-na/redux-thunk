@@ -20,15 +20,18 @@ const fail = () => {
 export default function Login() {
   const navigate = useNavigate();
   const onFinish = (values) => {
-    const user = JSON.parse(localStorage.getItem("infor"));
-    if (
-      user.username === values.username &&
-      user.password === values.password
-    ) {
-      navigate("/infor");
-    } else {
-      fail();
-    }
+    const users = JSON.parse(localStorage.getItem("infor"));
+    users.map((user) => {
+      if (
+        user.username === values.username &&
+        user.password === values.password
+      ) {
+        localStorage.setItem("username", JSON.stringify(user.username));
+        navigate("/infor");
+      } else {
+        fail();
+      }
+    });
   };
 
   return (
