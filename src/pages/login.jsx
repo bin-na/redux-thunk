@@ -1,18 +1,43 @@
 import React from "react";
-import { Form, Input, Button, Checkbox, Row, Col, Typography } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Row,
+  Col,
+  Typography,
+  message,
+} from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const { Text } = Typography;
+
+const fail = () => {
+  message.error("Your username or password is incorrect!");
+};
+
 export default function Login() {
+  const navigate = useNavigate();
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    const user = JSON.parse(localStorage.getItem("infor"));
+    if (
+      user.username === values.username &&
+      user.password === values.password
+    ) {
+      navigate("/infor");
+    } else {
+      fail();
+    }
+
+    console.log("Received values of form: ", values.username);
   };
 
   return (
     <div className="my-container">
       <div className="banner">
         <div className="inner-banner">
-          <Col xs={24}>
+          <div>
             <Form
               size="normal"
               name="normal_login"
@@ -79,7 +104,7 @@ export default function Login() {
                 </Button>
               </Form.Item>
             </Form>
-          </Col>
+          </div>
         </div>
       </div>
     </div>

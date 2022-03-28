@@ -5,7 +5,7 @@ import { Avatar, Row, Col } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 const UserPage = () => {
   const infor = useSelector((state) => state.infor);
-  console.log(infor);
+  
   return (
     <div className="userWrapper">
       <div className="banner-infor">
@@ -23,14 +23,14 @@ const UserPage = () => {
                 <p className="p-infor">Full name: </p>
                 <p className="p-infor">Phone number: </p>
               </Col>
-              <Col style={{ marginLeft: "50px" }} />
+              <Col style={{ marginLeft: "10%" }} />
               <Col className="user-infor">
-                <p className="p-infor2">{infor.email} </p>
-                <p className="p-infor2">Gender: </p>
-                <p className="p-infor2">Adress: </p>
-                <p className="p-infor2">Username: </p>
-                <p className="p-infor2">Full name: </p>
-                <p className="p-infor2">Phone number: </p>
+                <p className="p-infor2">{infor.email}a </p>
+                <p className="p-infor2">{infor.gender} c</p>
+                <p className="p-infor2">{infor.address}c </p>
+                <p className="p-infor2">{infor.username} c</p>
+                <p className="p-infor2">{infor.full_name}c </p>
+                <p className="p-infor2">{infor.phone_number} c</p>
               </Col>
             </Row>
           </div>

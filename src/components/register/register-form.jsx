@@ -87,18 +87,16 @@ const RegisterForm = () => {
     setUserInfor({ ...userInfor, gender: value });
   };
   const onChangeAdress = (value) => {
+    value[0] = value[0] + " ";
+    value[1] = value[1] + " ";
     setUserInfor({ ...userInfor, address: value });
   };
   const onChangeRegisterForm = (e) => {
     setUserInfor({ ...userInfor, [e.target.name]: e.target.value });
   };
-  const onFinish = () => {
-    openMessage(
-      "Please fill all the required and check in agree term and policy!!"
-    );
-  };
 
   const onSubmitForm = () => {
+    const user = JSON.parse(localStorage.getItem("infor"));
     if (
       !userInfor.username ||
       !userInfor.full_name ||
@@ -106,13 +104,19 @@ const RegisterForm = () => {
       !userInfor.password ||
       !userInfor.confirm_password ||
       !userInfor.address ||
-      !userInfor.phone ||
+      !userInfor.phone_number ||
       !userInfor.gender ||
       !term
     ) {
+      openMessage(
+        "Please fill all the required and check in agree term and policy!!"
+      );
+    } else if (user.username === userInfor.username) {
+      openMessage("This username is already exists!");
+    } else {
       openMessageSuccess("Register successfully!");
       localStorage.setItem("infor", JSON.stringify(userInfor));
-      navigate("/infor");
+      navigate("/login");
     }
   };
 
@@ -135,7 +139,6 @@ const RegisterForm = () => {
         {...formItemLayout}
         form={form}
         name="register"
-        onFinishFailed={onFinish}
         initialValues={{
           prefix: "84",
         }}
