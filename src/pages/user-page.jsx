@@ -4,8 +4,8 @@ import "./user-page.css";
 import { Avatar, Row, Col } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 const UserPage = () => {
-  const infor = useSelector((state) => state.infor);
-  
+  const infor = useSelector((state) => state.ahuhu);
+  console.log(infor);
   return (
     <div className="userWrapper">
       <div className="banner-infor">

@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { Form, Input, Cascader, Select, Checkbox, Button, message } from "antd";
+import {
+  Form,
+  Input,
+  Cascader,
+  Select,
+  Checkbox,
+  Button,
+  Row,
+  Col,
+  Space,
+  message,
+} from "antd";
 import { Link, useNavigate } from "react-router-dom";
-const key = "updatable";
 
 const openMessage = (text) => {
   message.error(text, 2);
@@ -68,58 +78,22 @@ const tailFormItemLayout = {
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const [userInfor, setUserInfor] = useState({
-    username: "",
-    full_name: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-    address: ["", "", ""],
-    phone_number: "",
-    gender: "",
-  });
-  const [term, setTerm] = useState(false);
   const [form] = Form.useForm();
-  const onChangeTerm = (e) => {
-    setTerm(e.target.checked);
-  };
-  const onChangeSelect = (value) => {
-    setUserInfor({ ...userInfor, gender: value });
-  };
-  const onChangeAdress = (value) => {
-    value[0] = value[0] + " ";
-    value[1] = value[1] + " ";
-    setUserInfor({ ...userInfor, address: value });
-  };
-  const onChangeRegisterForm = (e) => {
-    setUserInfor({ ...userInfor, [e.target.name]: e.target.value });
-  };
-
-  const onSubmitForm = () => {
-    const user = JSON.parse(localStorage.getItem("infor"));
-    if (
-      !userInfor.username ||
-      !userInfor.full_name ||
-      !userInfor.email ||
-      !userInfor.password ||
-      !userInfor.confirm_password ||
-      !userInfor.address ||
-      !userInfor.phone_number ||
-      !userInfor.gender ||
-      !term
-    ) {
-      openMessage(
-        "Please fill all the required and check in agree term and policy!!"
-      );
-    } else if (user.username === userInfor.username) {
-      openMessage("This username is already exists!");
+  const onFinish = (values) => {
+    if (localStorage.getItem("infor") === null) {
+      localStorage.setItem("infor", JSON.stringify([values]));
     } else {
+      const getArr = JSON.parse(localStorage.getItem("infor"));
+      //console.log('Received values of form: ', values);
       openMessageSuccess("Register successfully!");
-      localStorage.setItem("infor", JSON.stringify(userInfor));
+      localStorage.setItem("infor", JSON.stringify([...getArr, values]));
+      //localStorage.setItem('infor', JSON.stringify(values));
       navigate("/login");
     }
   };
-
+  const onFinishFailed = () => {
+    openMessage("Vui lòng điền đầy đủ thông tin");
+  };
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select
@@ -139,6 +113,8 @@ const RegisterForm = () => {
         {...formItemLayout}
         form={form}
         name="register"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
         initialValues={{
           prefix: "84",
         }}
@@ -160,25 +136,13 @@ const RegisterForm = () => {
             },
           ]}
         >
-          <Input
-            name="username"
-            value={userInfor.username}
-            onChange={onChangeRegisterForm}
-            placeholder="Tên Đăng nhập"
-            size="large"
-          />
+          <Input placeholder="Tên Đăng nhập" size="large" />
         </Form.Item>
         <Form.Item
           name="name"
           rules={[{ required: true, message: "Vui lòng nhập thông tin" }]}
         >
-          <Input
-            name="full_name"
-            value={userInfor.full_name}
-            onChange={onChangeRegisterForm}
-            placeholder="Họ và tên"
-            size="large"
-          />
+          <Input placeholder="Họ và tên" size="large" />
         </Form.Item>
         <Form.Item
           name="email"
@@ -193,13 +157,7 @@ const RegisterForm = () => {
             },
           ]}
         >
-          <Input
-            name="email"
-            value={userInfor.email}
-            onChange={onChangeRegisterForm}
-            placeholder="E-mail"
-            size="large"
-          />
+          <Input placeholder="E-mail" size="large" />
         </Form.Item>
 
         <Form.Item
@@ -212,13 +170,7 @@ const RegisterForm = () => {
           ]}
           hasFeedback
         >
-          <Input.Password
-            name="password"
-            value={userInfor.password}
-            onChange={onChangeRegisterForm}
-            placeholder="Mật khẩu"
-            size="large"
-          />
+          <Input.Password placeholder="Mật khẩu" size="large" />
         </Form.Item>
 
         <Form.Item
@@ -241,13 +193,7 @@ const RegisterForm = () => {
             }),
           ]}
         >
-          <Input.Password
-            name="confirm_password"
-            value={userInfor.confirm_password}
-            onChange={onChangeRegisterForm}
-            placeholder="Xác minh mật khẩu"
-            size="large"
-          />
+          <Input.Password placeholder="Xác minh mật khẩu" size="large" />
         </Form.Item>
         <Form.Item
           name="address"
@@ -259,13 +205,7 @@ const RegisterForm = () => {
             },
           ]}
         >
-          <Cascader
-            onChange={onChangeAdress}
-            name="address"
-            options={address}
-            placeholder="Địa chỉ"
-            size="large"
-          />
+          <Cascader options={address} placeholder="Địa chỉ" size="large" />
         </Form.Item>
 
         <Form.Item
@@ -288,9 +228,6 @@ const RegisterForm = () => {
           ]}
         >
           <Input
-            name="phone_number"
-            value={userInfor.phone_number}
-            onChange={onChangeRegisterForm}
             addonBefore={prefixSelector}
             placeholder="Số điện thoại"
             size="large"
@@ -305,12 +242,7 @@ const RegisterForm = () => {
             },
           ]}
         >
-          <Select
-            onChange={onChangeSelect}
-            name="gender"
-            placeholder="Chọn thông tin giới tính"
-            size="large"
-          >
+          <Select placeholder="Chọn thông tin giới tính" size="large">
             <Option value="male">Nam</Option>
             <Option value="female">Nữ</Option>
             <Option value="other">Khác</Option>
@@ -329,18 +261,12 @@ const RegisterForm = () => {
           ]}
           {...tailFormItemLayout}
         >
-          <Checkbox onChange={onChangeTerm}>
+          <Checkbox>
             Tôi đồng ý với các <Link to="/">điều khoản</Link>
           </Checkbox>
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          <Button
-            onClick={onSubmitForm}
-            type="primary"
-            htmlType="submit"
-            block
-            size="large"
-          >
+          <Button type="primary" htmlType="submit" block size="large">
             Đăng ký
           </Button>
         </Form.Item>

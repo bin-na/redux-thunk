@@ -29,8 +29,6 @@ export default function Login() {
     } else {
       fail();
     }
-
-    console.log("Received values of form: ", values.username);
   };
 
   return (
