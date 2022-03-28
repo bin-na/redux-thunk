@@ -13,11 +13,12 @@ import { ahuhuActions } from '../actions';
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    // if (localStorage.getItem("infor")) {
-    //   const userInfor = JSON.parse(localStorage.getItem("infor"));
-    //   dispatch(saveInfor(userInfor));
-    // }
-    dispatch(ahuhuActions.requestData());
+    if (localStorage.getItem('infor')) {
+      //   const userInfor = JSON.parse(localStorage.getItem("infor"));
+      //   dispatch(saveInfor(userInfor));
+      // }
+      dispatch(ahuhuActions.requestData());
+    }
   }, []);
   return (
     <BrowserRouter history={history}>
