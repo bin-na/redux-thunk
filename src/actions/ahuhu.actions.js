@@ -15,10 +15,8 @@ const requestData = () => {
     return { type: ahuhuConstants.REQUEST_DATA, payload };
   };
   return (dispatch) => {
-    if (localStorage.getItem('infor') !== null) {
-      const data = JSON.parse(localStorage.getItem('infor'));
-      dispatch(request({ data }));
-    }
+    const data = JSON.parse(localStorage.getItem('infor'));
+    dispatch(request({ data }));
   };
 };
 export const ahuhuActions = {
