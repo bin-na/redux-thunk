@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Form,
   Input,
@@ -8,100 +8,105 @@ import {
   Col,
   Typography,
   message,
-} from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+} from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router-dom';
 const { Text } = Typography;
 
-const fail = () => {
-  message.error("Your username or password is incorrect!");
-};
-
 export default function Login() {
+  const isTrue = useRef(false);
   const navigate = useNavigate();
   const onFinish = (values) => {
-    const users = JSON.parse(localStorage.getItem("infor"));
+    const users = JSON.parse(localStorage.getItem('infor'));
     users.map((user) => {
       if (
         user.username === values.username &&
         user.password === values.password
       ) {
-        localStorage.setItem("username", JSON.stringify(user.username));
-        navigate("/infor");
-      } else {
-        fail();
+        isTrue.current = true;
       }
     });
+    if (isTrue.current) {
+      if (localStorage.getItem('username')) {
+        localStorage.removeItem('username');
+      }
+      isTrue.current = false;
+      localStorage.setItem('username', JSON.stringify(values.username));
+      console.log(isTrue);
+      navigate('/infor');
+    } else {
+      message.error('Your username or password is incorrect!');
+    }
   };
 
   return (
-    <div className="my-container">
-      <div className="banner">
-        <div className="inner-banner">
+    <div className='my-container'>
+      <div className='banner'>
+        <div className='inner-banner'>
           <div>
             <Form
-              size="normal"
-              name="normal_login"
-              className="login-form"
+              size='normal'
+              name='normal_login'
+              className='login-form'
               initialValues={{
                 remember: true,
               }}
               onFinish={onFinish}
             >
               <Form.Item
-                name="username"
+                name='username'
                 rules={[
                   {
                     required: true,
-                    message: "Please input your Username!",
+                    message: 'Please input your Username!',
                   },
                 ]}
               >
                 <Input
-                  prefix={<UserOutlined className="site-form-item-icon" />}
-                  placeholder="Username"
+                  prefix={<UserOutlined className='site-form-item-icon' />}
+                  placeholder='Username'
                 />
               </Form.Item>
               <Form.Item
-                name="password"
+                name='password'
                 rules={[
                   {
                     required: true,
-                    message: "Please input your Password!",
+                    message: 'Please input your Password!',
                   },
                 ]}
               >
                 <Input
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
-                  placeholder="Password"
+                  prefix={<LockOutlined className='site-form-item-icon' />}
+                  type='password'
+                  placeholder='Password'
                 />
               </Form.Item>
               <Form.Item>
-                <Form.Item name="remember" valuePropName="checked" noStyle>
+                <Form.Item name='remember' valuePropName='checked' noStyle>
                   <Checkbox>
-                    <span className="text-banner">Remember me</span>
+                    <span className='text-banner'>Remember me</span>
                   </Checkbox>
                 </Form.Item>
 
-                <a className="login-form-forgot" href="">
-                  <span className="text-banner">Forgot password</span>
+                <a className='login-form-forgot' href=''>
+                  <span className='text-banner'>Forgot password</span>
                 </a>
               </Form.Item>
               <Form.Item>
                 <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="login-form-button"
+                  type='primary'
+                  htmlType='submit'
+                  className='login-form-button'
                 >
                   Log in
                 </Button>
                 <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="register-form-button"
+                  type='primary'
+                  htmlType='submit'
+                  className='register-form-button'
                 >
-                  <Link to="/register">Register</Link>
+                  <Link to='/register'>Register</Link>
                 </Button>
               </Form.Item>
             </Form>

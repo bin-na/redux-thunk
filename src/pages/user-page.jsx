@@ -12,26 +12,13 @@ const UserPage = () => {
     <div className='userWrapper'>
       <div className='banner-infor'>
         <div className='infor'>
-          <Avatar className='avatar' size={64} icon={<UserOutlined />} />
-
           <div className='user'>
             <Row>
-              <p className='title'>Personal Information</p>
               {infor.data.map((item, index) => {
                 if (
                   item.username === JSON.parse(localStorage.getItem('username'))
                 ) {
-                  return (
-                    <UserItem
-                      key={index}
-                      username={item.username}
-                      email={item.email}
-                      gender={item.gender}
-                      address={item.address}
-                      full_name={item.phone}
-                      phone_number={item.name}
-                    />
-                  );
+                  return <UserItem key={index} info={item} />;
                 }
               })}
             </Row>
