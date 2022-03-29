@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import './user-page.css';
 import { Avatar, Row, Col } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import UserItem from '../components/register/user-item';
+
 const UserPage = () => {
   const infor = useSelector((state) => state.ahuhu);
 
@@ -15,23 +17,23 @@ const UserPage = () => {
           <div className='user'>
             <Row>
               <p className='title'>Personal Information</p>
-              <Col className='user-infor'>
-                <p className='p-infor'>Email: </p>
-                <p className='p-infor'>Gender: </p>
-                <p className='p-infor'>Adress: </p>
-                <p className='p-infor'>Username: </p>
-                <p className='p-infor'>Full name: </p>
-                <p className='p-infor'>Phone number: </p>
-              </Col>
-              <Col style={{ marginLeft: '50px' }} />
-              <Col className='user-infor'>
-                <p className='p-infor2'>{infor.data.email} </p>
-                <p className='p-infor2'>Gender: </p>
-                <p className='p-infor2'>Adress: </p>
-                <p className='p-infor2'>Username: </p>
-                <p className='p-infor2'>Full name: </p>
-                <p className='p-infor2'>Phone number: </p>
-              </Col>
+              {infor.data.map((item, index) => {
+                if (
+                  item.username === JSON.parse(localStorage.getItem('username'))
+                ) {
+                  return (
+                    <UserItem
+                      key={index}
+                      username={item.username}
+                      email={item.email}
+                      gender={item.gender}
+                      address={item.address}
+                      full_name={item.phone}
+                      phone_number={item.name}
+                    />
+                  );
+                }
+              })}
             </Row>
           </div>
         </div>

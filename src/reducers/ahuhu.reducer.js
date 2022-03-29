@@ -1,4 +1,4 @@
-import { ahuhuConstants } from '../constants';
+import { ahuhuConstants } from "../constants";
 const initialState = {
   text: '',
   data: [],

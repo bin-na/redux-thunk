@@ -1,16 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = [];
 
 const inforSlice = createSlice({
   name: "infor",
   initialState,
   reducers: {
-    saveInfor(state, action) {
-      console.log(action.payload);
-      state = { ...action.payload };
-      console.log(state);
-    },
+    saveInfor: (state, action) => action.payload,
   },
 });
 
