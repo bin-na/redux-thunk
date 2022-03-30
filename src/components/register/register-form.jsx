@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Form,
   Input,
@@ -9,22 +9,31 @@ import {
   Row,
   Col,
   Space,
+  message,
 } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+const openMessage = (text) => {
+  message.error(text, 2);
+};
+
+const openMessageSuccess = (text) => {
+  message.success(text, 2);
+};
 
 const { Option } = Select;
 const patern = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
 const address = [
   {
-    value: 'HCM',
+    value: 'Thành phố Hồ Chí Minh',
     label: 'Thành phố Hồ Chí Minh',
     children: [
       {
-        value: 'distric1',
+        value: 'Quận 1',
         label: 'Quận 1',
         children: [
           {
-            value: 'nguyencutrinh',
+            value: 'Nguyễn Cư Trinh',
             label: 'phường Nguyễn Cư Trinh',
           },
         ],
@@ -68,12 +77,32 @@ const tailFormItemLayout = {
 };
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
-
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+    if (localStorage.getItem('infor') === null) {
+      localStorage.setItem('infor', JSON.stringify([values]));
+      openMessageSuccess('Register successfully!');
+      navigate('/login');
+    } else {
+      if (localStorage.getItem('username')) {
+        localStorage.removeItem('username');
+      }
+      const getArr = JSON.parse(localStorage.getItem('infor'));
+      getArr.forEach((user) => {
+        if (user.username === values.username) {
+          openMessage('This username already exists!');
+        } else {
+          openMessageSuccess('Register successfully!');
+          localStorage.setItem('infor', JSON.stringify([...getArr, values]));
+          navigate('/login');
+        }
+      });
+    }
   };
-
+  const onFinishFailed = () => {
+    openMessage('Vui lòng điền đầy đủ thông tin');
+  };
   const prefixSelector = (
     <Form.Item name='prefix' noStyle>
       <Select
@@ -93,7 +122,8 @@ const RegisterForm = () => {
         {...formItemLayout}
         form={form}
         name='register'
-        onFinishFailed={onFinish}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
         initialValues={{
           prefix: '84',
         }}
@@ -114,14 +144,12 @@ const RegisterForm = () => {
               },
             },
           ]}
-          bordered={false}
         >
           <Input placeholder='Tên Đăng nhập' size='large' />
         </Form.Item>
         <Form.Item
           name='name'
           rules={[{ required: true, message: 'Vui lòng nhập thông tin' }]}
-          bordered={false}
         >
           <Input placeholder='Họ và tên' size='large' />
         </Form.Item>
@@ -224,9 +252,9 @@ const RegisterForm = () => {
           ]}
         >
           <Select placeholder='Chọn thông tin giới tính' size='large'>
-            <Option value='male'>Nam</Option>
-            <Option value='female'>Nữ</Option>
-            <Option value='other'>Khác</Option>
+            <Option value='Nam'>Nam</Option>
+            <Option value='Nữ'>Nữ</Option>
+            <Option value='Khác'>Khác</Option>
           </Select>
         </Form.Item>
         <Form.Item

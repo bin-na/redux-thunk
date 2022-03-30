@@ -1,4 +1,4 @@
-import { ahuhuConstants } from "../constants";
+import { ahuhuConstants } from '../constants';
 
 const alert = (text) => {
   const request = (payload) => {
@@ -10,6 +10,15 @@ const alert = (text) => {
   };
 };
 
+const requestData = () => {
+  const request = (payload) => {
+    return { type: ahuhuConstants.REQUEST_DATA, payload };
+  };
+  return (dispatch) => {
+    const data = JSON.parse(localStorage.getItem('infor'));
+    dispatch(request({ data }));
+  };
+};
 export const ahuhuActions = {
-  alert,
+  requestData,
 };
