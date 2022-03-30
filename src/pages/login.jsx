@@ -14,30 +14,44 @@ import { Link, useNavigate } from 'react-router-dom';
 const { Text } = Typography;
 
 export default function Login() {
-  const isTrue = useRef(false);
   const navigate = useNavigate();
   const onFinish = (values) => {
     const users = JSON.parse(localStorage.getItem('infor'));
-    users.map((user) => {
-      if (
-        user.username === values.username &&
-        user.password === values.password
-      ) {
-        isTrue.current = true;
-      }
-    });
-    if (isTrue.current) {
-      if (localStorage.getItem('username')) {
-        localStorage.removeItem('username');
-      }
-      isTrue.current = false;
+    if (
+      users.some(
+        (item) =>
+          item.username === values.username && item.password === values.password
+      )
+    ) {
       localStorage.setItem('username', JSON.stringify(values.username));
-      console.log(isTrue);
       navigate('/infor');
-    } else {
-      message.error('Your username or password is incorrect!');
+      return;
     }
-  };
+
+    message.error('Your username or password is incorrect!');
+
+  //   let isTrue = false;
+
+  //   users.map((user) => {
+  //     if (
+  //       user.username === values.username &&
+  //       user.password === values.password
+  //     ) {
+  //       isTrue = true;
+  //     }
+  //   });
+
+  //   if (isTrue) {
+  //     if (localStorage.getItem('username')) {
+  //       localStorage.removeItem('username');
+  //     }
+  //     isTrue = false;
+  //     localStorage.setItem('username', JSON.stringify(values.username));
+  //     navigate('/infor');
+  //   } else {
+  //     message.error('Your username or password is incorrect!');
+  //   }
+  // };
 
   return (
     <div className='my-container'>
